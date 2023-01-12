@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 import { GameComponent } from '../game/game.component';
-import { PlayerComponent } from '../player/player.component';
 
 @Component({
   selector: 'app-card',

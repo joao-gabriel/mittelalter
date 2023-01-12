@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CardComponent } from '../card/card.component';
-import { GameComponent } from '../game/game.component';
+import { InfantryComponent } from '../cards/infantry/infantry.component';
 
 @Component({
   selector: 'app-player',
@@ -10,17 +10,40 @@ import { GameComponent } from '../game/game.component';
 export class PlayerComponent {
 
   damage:number = 10;  
-  deck:Array<CardComponent> = [];
+  deck:Array<any> = [];
   hand:Array<CardComponent> = [];
   battlefield:Array<CardComponent> = [];
   discarded:Array<CardComponent> = [];
 
   constructor(){
-    for(let i=0; i<30; i++){
-      let card:CardComponent = new CardComponent();
-      card.hasEffect = true;
-      card.cardEffect = (game:GameComponent) => {console.log('efeito da carta '+i); console.log(game.players[0].damage);};
-      this.deck.push(card);
+    this.createDeck();
+  }
+
+  shuffleDeck(){
+
+  }
+
+  fillHand(limit:number){
+    for (let i = 0; i<limit; i++){
+      this.hand.push(this.deck[0]);
+      this.deck.pop();
     }
   }
+
+  // TODO: Get deck cards from external json file
+  createDeck(){
+
+    let availableCards = [
+      InfantryComponent,
+      InfantryComponent,
+      InfantryComponent,
+      InfantryComponent      
+    ];
+
+    availableCards.forEach(element => {
+      this.deck.push(new element());
+    });
+
+  }
+
 }

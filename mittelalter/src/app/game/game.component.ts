@@ -8,13 +8,13 @@ import { PlayerComponent } from '../player/player.component';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
+
   winner!:PlayerComponent;
   turn!:number;
   maxTurns!:number;
   time!:number;
   players:Array<PlayerComponent> = [];
   running:boolean = false;
-  
 
   constructor(){
     let player1 = new PlayerComponent();
@@ -25,17 +25,10 @@ export class GameComponent {
   }
 
   newTurn(){
-    this.moveCard(this.players[0].deck[0], 'deck', 'hand', this.players[0]);
-    this.moveCard(this.players[0].deck[0], 'deck', 'hand', this.players[0]);
-    this.moveCard(this.players[0].deck[0], 'deck', 'hand', this.players[0]);
-    this.moveCard(this.players[1].deck[0], 'deck', 'hand', this.players[1]);
-    this.moveCard(this.players[1].deck[0], 'deck', 'hand', this.players[1]);
-    this.moveCard(this.players[1].deck[0], 'deck', 'hand', this.players[1]);
-
-
+    this.players[0].fillHand(3);
+    this.players[1].fillHand(3);
     console.log(this.players[0].deck);
     console.log(this.players[0].hand);
-
   }
 
   moveCard(card:CardComponent, source:string, destination:string, who:PlayerComponent){
