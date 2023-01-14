@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, NgModule, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { PlayerComponent } from '../player/player.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InfantryComponent } from '../cards/infantry/infantry.component';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
+
 export class GameComponent {
+
+  @ViewChild('container', { read: ViewContainerRef })
+  container!: ViewContainerRef;
 
   winner!:PlayerComponent;
   turn!:number;
@@ -16,7 +22,7 @@ export class GameComponent {
   players:Array<PlayerComponent> = [];
   running:boolean = false;
 
-  constructor(){
+  constructor(private componentFactoryResolver: ComponentFactoryResolver){
     let player1 = new PlayerComponent();
     let player2 = new PlayerComponent();
     this.players.push(player1);
@@ -27,8 +33,6 @@ export class GameComponent {
   newTurn(){
     this.players[0].fillHand(3);
     this.players[1].fillHand(3);
-    console.log(this.players[0].deck);
-    console.log(this.players[0].hand);
   }
 
   moveCard(card:CardComponent, source:string, destination:string, who:PlayerComponent){

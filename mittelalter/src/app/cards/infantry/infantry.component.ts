@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CardComponent } from 'src/app/card/card.component';
+import { PlayerComponent } from 'src/app/player/player.component';
 
 @Component({
   selector: 'app-infantry',

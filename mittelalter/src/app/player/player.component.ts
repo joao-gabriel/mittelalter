@@ -41,7 +41,9 @@ export class PlayerComponent {
     ];
 
     availableCards.forEach(element => {
-      this.deck.push(new element());
+      let thisCard = new element();
+      thisCard.onwer = this;
+      this.deck.push(thisCard);
     });
 
   }
