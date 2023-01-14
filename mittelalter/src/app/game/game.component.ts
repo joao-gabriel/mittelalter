@@ -1,7 +1,6 @@
-import { Component, ComponentFactoryResolver, NgModule, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { PlayerComponent } from '../player/player.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-game',
@@ -21,17 +20,19 @@ export class GameComponent {
   players:Array<PlayerComponent> = [];
   running:boolean = false;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver){
+  constructor(){
     let player1 = new PlayerComponent(this);
     let player2 = new PlayerComponent(this);
     this.players.push(player1);
     this.players.push(player2);
+    this.players[0].shuffle();
+    this.players[1].shuffle();
     this.newTurn();
   }
 
   newTurn(){
-    this.players[0].fillHand(3);
-    this.players[1].fillHand(3);
+    this.players[0].fillHand(4);
+    this.players[1].fillHand(4);
     console.log(this.players[0]);
     console.log(this.players[1]);
   }

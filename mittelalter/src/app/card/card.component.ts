@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { GameComponent } from '../game/game.component';
 import { PlayerComponent } from '../player/player.component';

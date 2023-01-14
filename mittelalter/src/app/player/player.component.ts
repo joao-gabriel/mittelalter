@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Guid } from 'guid-typescript';
-import { timestamp } from 'rxjs';
 import { CardComponent } from '../card/card.component';
 import { GameComponent } from '../game/game.component';
 
@@ -26,8 +25,22 @@ export class PlayerComponent {
     this.createDeck();
   }
 
-  shuffleDeck(){
-
+  shuffle() {
+    let currentIndex = this.deck.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [this.deck[currentIndex], this.deck[randomIndex]] = [
+        this.deck[randomIndex], this.deck[currentIndex]];
+    }
+  
+    //return array;
   }
 
   fillHand(limit:number){
@@ -42,14 +55,14 @@ export class PlayerComponent {
 
     let availableCards = [
       {
-        quantity:1,
+        quantity:6,
         name: 'Infantry',
         points: 2,
         imageSrc: 'infantry.PNG',
         
       },
       {
-        quantity:2,
+        quantity:4,
         name: 'Archers',
         points: 2,
         imageSrc: 'archers.PNG',
