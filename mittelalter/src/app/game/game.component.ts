@@ -2,7 +2,6 @@ import { Component, ComponentFactoryResolver, NgModule, Type, ViewChild, ViewCon
 import { CardComponent } from '../card/card.component';
 import { PlayerComponent } from '../player/player.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { InfantryComponent } from '../cards/infantry/infantry.component';
 
 @Component({
   selector: 'app-game',
@@ -23,8 +22,8 @@ export class GameComponent {
   running:boolean = false;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver){
-    let player1 = new PlayerComponent();
-    let player2 = new PlayerComponent();
+    let player1 = new PlayerComponent(this);
+    let player2 = new PlayerComponent(this);
     this.players.push(player1);
     this.players.push(player2);
     this.newTurn();
@@ -33,8 +32,12 @@ export class GameComponent {
   newTurn(){
     this.players[0].fillHand(3);
     this.players[1].fillHand(3);
+    console.log(this.players[0]);
+    console.log(this.players[1]);
   }
 
+
+  // FIXME: Review if the code is actually removing the right card from source
   moveCard(card:CardComponent, source:string, destination:string, who:PlayerComponent){
 
     switch(source){
@@ -81,9 +84,15 @@ export class GameComponent {
   checkBattlefields(battlefield1:any, battlefield2:any){
     battlefield1.forEach((element: any) => {
       if (element.hasEffect){
-        element.cardEffect(this);
+        element.cardEffect(this, element);
       }
     });
+  }
+
+  otherPlayer(player:PlayerComponent){
+
+    return this.players.find(element => element.id != player.id);
+    
   }
 
 }

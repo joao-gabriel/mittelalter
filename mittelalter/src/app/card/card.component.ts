@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Guid } from 'guid-typescript';
 import { GameComponent } from '../game/game.component';
 import { PlayerComponent } from '../player/player.component';
 
@@ -12,17 +13,20 @@ export class CardComponent implements OnInit {
 
   @Input() data: any = null;
 
+  id!:Guid;
   name!:string;
   points!:number;
   imageSrc!:string;
   text!:string;
   effectPhase!:number;
   precendence!:number;
-  hasEffect:boolean = false;
+  hasEffect!:boolean;
   onwer!:PlayerComponent;
-  cardEffect = (game:GameComponent) => {}; 
+  cardEffect = (game:GameComponent, card:CardComponent) => {}; 
 
-  constructor(){}
+  constructor(){
+    this.id = Guid.create();
+  }
 
   ngOnInit(): void {
     if (this.data != null){
