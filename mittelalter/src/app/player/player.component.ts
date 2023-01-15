@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Guid } from 'guid-typescript';
 import { CardComponent } from '../card/card.component';
 import { GameComponent } from '../game/game.component';
 
@@ -11,7 +10,7 @@ import { GameComponent } from '../game/game.component';
 })
 export class PlayerComponent {
 
-  id:Guid;
+  id:string;
   damage:number = 10;  
   deck:Array<any> = [];
   hand:Array<CardComponent> = [];
@@ -21,7 +20,7 @@ export class PlayerComponent {
 
   constructor(game:GameComponent){
     this.gameRef = game;
-    this.id = Guid.create();
+    this.id = crypto.randomUUID();
     this.createDeck();
   }
 
@@ -85,27 +84,26 @@ export class PlayerComponent {
       }
     ];
 
-    availableCards.forEach(element => {
-      let thisCard = new CardComponent();
-      thisCard.onwer = this;
-      thisCard.name = element.name;
-      thisCard.points = element.points;
-      thisCard.imageSrc = element.imageSrc;
-      if (typeof element.hasEffect == 'boolean'){
-        thisCard.hasEffect = element.hasEffect;
+    availableCards.forEach((element, index) => {
+      let cardObj = new CardComponent();
+      for (let i=0; i<element.quantity; i++){
+        let thisCard = {...cardObj};
+        thisCard.onwer = this;
+        thisCard.id = crypto.randomUUID();
+        thisCard.name = element.name;
+        thisCard.points = element.points;
+        thisCard.imageSrc = element.imageSrc;
+        if (typeof element.hasEffect == 'boolean'){
+          thisCard.hasEffect = element.hasEffect;
+        }
+        if (typeof element.cardEffect == 'function'){
+          thisCard.cardEffect = element.cardEffect;
+        }
+        this.deck.push(thisCard);
       }
-      if (typeof element.cardEffect == 'function'){
-        thisCard.cardEffect = element.cardEffect;
-      }
-      this.addCardToPlayersDeck(thisCard, element.quantity);
+
     });
 
-  }
-
-  addCardToPlayersDeck(card:CardComponent, quantity:number){
-    for (let i=0; i<quantity; i++){
-      this.deck.push(card);
-    }
   }
 
 }
