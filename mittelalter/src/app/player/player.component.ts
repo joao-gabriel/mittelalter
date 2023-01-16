@@ -17,6 +17,7 @@ export class PlayerComponent {
   battlefield:Array<CardComponent> = [];
   discarded:Array<CardComponent> = [];
   gameRef:GameComponent;
+  deckQty:number=0;
 
   constructor(game:GameComponent){
     this.gameRef = game;
@@ -104,6 +105,7 @@ export class PlayerComponent {
           thisCard.cardEffect = element.cardEffect;
         }
         this.deck.push(thisCard);
+        this.deckQty++;
       }
 
     });

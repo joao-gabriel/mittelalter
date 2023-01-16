@@ -1,15 +1,21 @@
 <div class="card p-2 h-100">
-    <div class="name">
-        {{name}}
+    <div class="card-body p-0">
+        <div class="name w-75">
+            <div class="card">
+                <div class="card-body p-0 text-center text-uppercase fw-bold">
+                    {{name}}
+                </div>
+            </div>
+        </div>
+
+        <div class="image">
+            <img [src]="'assets/img/'+imageSrc" />
+        </div>
+        <div class="text">
+            <p>{{text}}</p>
+        </div>
+        <div class="points">
+            {{points}}
+        </div>
     </div>
-    <div class="image">
-        <img [src]="'assets/img/'+imageSrc" />
-    </div>
-    <div class="text">
-        <p>{{text}}</p>
-    </div>
-    <div class="points">
-        {{points}}
-    </div>
-    
 </div>
