@@ -1,13 +1,28 @@
-<p>game works!</p>
-<div class="card-container" *ngFor ="let data of players[0].hand;  let i = index" 
->
-<app-card [data]="data">
-</app-card><br />
-<button (click)="sendCardToEnemy(i); sendToEnemyBtnClicked = true;" [disabled]="sendToEnemyBtnClicked" >Send to Opponent</button>
-<button (click)="sendCardToDeck(i); sendToDeckBtnClicked = true;" [disabled]="sendToDeckBtnClicked" >Send back to deck</button>
-</div>
 
-<div   style="border: 1px solid; width: 20%; float: left; padding: 10px; margin: 10px; text-align: center;"  *ngFor ="let data of players[0].deck;  let i = index" 
->
-
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            <h2>Deck</h2>
+            <div class="deck">
+                <div class="deck-card w-100 border mb-1" *ngFor ="let data of players[0].deck;  let i = index">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="hand">
+                <h2>Hand</h2>
+                <div class="row">
+                    <div class="card-container col-3" *ngFor ="let data of players[0].hand;  let i = index">
+                        <app-card [data]="data"></app-card><br />
+                        <button (click)="sendCardToEnemy(i); sendToEnemyBtnClicked = true;" [disabled]="sendToEnemyBtnClicked" >Send to Opponent</button>
+                        <button (click)="sendCardToDeck(i); sendToDeckBtnClicked = true;" [disabled]="sendToDeckBtnClicked" >Send back to deck</button>
+                    </div>
+                </div>            
+            </div>
+        </div>
+        <div class="col-2">
+            <h2>Discard</h2>
+        </div>
+    </div>
 </div>
