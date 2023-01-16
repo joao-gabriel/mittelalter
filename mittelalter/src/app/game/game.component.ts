@@ -34,6 +34,7 @@ export class GameComponent {
     this.players[1].fillHand(4);
     console.log(this.players[0]);
     console.log(this.players[1]);
+    this.AISelection();
   }
 
   // FIXME: Review if the code is actually removing the right card from source
@@ -114,7 +115,17 @@ export class GameComponent {
       player1Points += element.points;
     });
 
+    battlefield2.forEach((element: any) => {
+      if (element.hasEffect){
+        element.cardEffect(this, element);
+      }
+      player2Points += element.points;
+    });
+    
+    console.log(battlefield1);
+    console.log(battlefield2);
     console.log ('forca de ataque: '+player1Points);
+    console.log ('forca de ataque inimiga: '+player2Points);
   }
 
   otherPlayer(player:PlayerComponent){
@@ -140,6 +151,32 @@ export class GameComponent {
       this.moveCard(0, 'hand', this.players[0], 'battlefield', this.players[0]);
       this.checkBattlefields(this.players[0].battlefield, this.players[1].battlefield);
     }
+  }
+
+  AISelection(){
+    let sendBackToEnemyDeck = 0;
+    let sendToPlayerDeck = 0;
+    let highValue = 9999;
+    // Sends the lower card to player
+    this.players[1].hand.forEach((element, index) => {
+      if (element.value < highValue ){
+        highValue = element.points;
+        sendToPlayerDeck = index;
+      }
+    });
+    console.log(sendToPlayerDeck);
+    this.moveCard(sendToPlayerDeck, 'hand', this.players[1], 'deck', this.players[0]);              
+    highValue = 9999;
+    this.players[1].hand.forEach((element, index) => {
+      // Sends the second lower card back to enemy deck
+      if (element.value < highValue ){
+        highValue = element.points;
+        sendBackToEnemyDeck = index;
+      }
+    });
+    console.log(sendBackToEnemyDeck);
+    this.moveCard(0, 'hand', this.players[1], 'battlefield', this.players[1]);   
+    this.moveCard(1, 'hand', this.players[1], 'battlefield', this.players[1]);   
   }
 
 }

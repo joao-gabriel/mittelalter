@@ -1,8 +1,13 @@
 <p>game works!</p>
-<div   style="border: 1px solid; width: 20%; float: left; padding: 10px; margin: 10px; text-align: center;"  *ngFor ="let data of players[0].hand;  let i = index" 
+<div class="card-container" *ngFor ="let data of players[0].hand;  let i = index" 
 >
 <app-card [data]="data">
 </app-card><br />
 <button (click)="sendCardToEnemy(i); sendToEnemyBtnClicked = true;" [disabled]="sendToEnemyBtnClicked" >Send to Opponent</button>
 <button (click)="sendCardToDeck(i); sendToDeckBtnClicked = true;" [disabled]="sendToDeckBtnClicked" >Send back to deck</button>
+</div>
+
+<div   style="border: 1px solid; width: 20%; float: left; padding: 10px; margin: 10px; text-align: center;"  *ngFor ="let data of players[0].deck;  let i = index" 
+>
+
 </div>

@@ -23,6 +23,7 @@ export class CardComponent implements OnInit {
   precendence!:number;
   hasEffect!:boolean;
   onwer!:PlayerComponent;
+  value!:number;
   cardEffect = (game:GameComponent, card:CardComponent) => {}; 
 
   constructor(){

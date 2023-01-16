@@ -1,0 +1,8 @@
+.card-container {
+    width: 20%; 
+    float: left; 
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    max-width: 300px;
+}

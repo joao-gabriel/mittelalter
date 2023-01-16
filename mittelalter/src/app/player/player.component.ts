@@ -58,13 +58,14 @@ export class PlayerComponent {
         name: 'Infantry',
         points: 2,
         imageSrc: 'infantry.PNG',
-        
+        value:0
       },
       {
         quantity:4,
         name: 'Archers',
         points: 2,
         imageSrc: 'archers.PNG',
+        value: 1,
         text : "If there's no Archers on enemy battlefield, add 1 point",
         effectPhase:3,
         precendence: 129,
@@ -93,6 +94,9 @@ export class PlayerComponent {
         thisCard.name = element.name;
         thisCard.points = element.points;
         thisCard.imageSrc = element.imageSrc;
+        if (typeof element.text == 'string'){
+          thisCard.text = element.text;
+        }
         if (typeof element.hasEffect == 'boolean'){
           thisCard.hasEffect = element.hasEffect;
         }
