@@ -1,4 +1,4 @@
-<div class="card p-2 h-100">
+<div class="card p-2 h-75">
     <div class="card-body p-0">
         <div class="name w-75">
             <div class="card">
@@ -11,11 +11,11 @@
         <div class="image">
             <img [src]="'assets/img/'+imageSrc" />
         </div>
-        <div class="text">
-            <p>{{text}}</p>
-        </div>
-        <div class="points">
+        <div class="points rounded-circle border w-25 py-2 px-3 bg-secondary border-0 text-center fw-bold text-white">
             {{points}}
+        </div>        
+        <div class="text">
+            <p><small>{{text}}</small></p>
         </div>
     </div>
 </div>

@@ -8,3 +8,9 @@ img {
     top: 13px;
     left: 12.5%;
 }
+
+.points {
+    position: relative;
+    bottom: 19px;
+    left: 37%;
+}
