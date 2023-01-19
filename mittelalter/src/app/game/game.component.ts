@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { PlayerComponent } from '../player/player.component';
 
@@ -18,8 +19,10 @@ export class GameComponent {
   time!:number;
   players:Array<PlayerComponent> = [];
   running:boolean = false;
+  playerPoints = 0;
+  enemyPoints = 0;
 
-  constructor(){
+  constructor(@Inject(DOCUMENT) private document: Document){
     let player1 = new PlayerComponent(this);
     let player2 = new PlayerComponent(this);
     this.players.push(player1);
@@ -105,27 +108,29 @@ export class GameComponent {
   }
 
   checkBattlefields(battlefield1:any, battlefield2:any){
-    let player1Points = 0;
-    let player2Points = 0;
     console.log(battlefield1);
     battlefield1.forEach((element: any) => {
       if (element.hasEffect){
         element.cardEffect(this, element);
       }
-      player1Points += element.points;
+      this.playerPoints += element.points;
     });
 
     battlefield2.forEach((element: any) => {
       if (element.hasEffect){
         element.cardEffect(this, element);
       }
-      player2Points += element.points;
+      this.enemyPoints += element.points;
     });
     
     console.log(battlefield1);
     console.log(battlefield2);
-    console.log ('forca de ataque: '+player1Points);
-    console.log ('forca de ataque inimiga: '+player2Points);
+    console.log ('forca de ataque: '+this.playerPoints);
+    console.log ('forca de ataque inimiga: '+this.enemyPoints);
+    let modalBtn = this.document.getElementById('battleModalBtn');
+    modalBtn?.click();
+    console.log(this.document.getElementById('battleModalBtn'));
+  
   }
 
   otherPlayer(player:PlayerComponent){

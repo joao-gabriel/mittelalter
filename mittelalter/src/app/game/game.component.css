@@ -1,13 +1,41 @@
+section.table-top {
+    background: rgb(0,51,0);
+    background: linear-gradient(180deg, rgba(0,51,0,1) 0%, rgba(0,187,0,1) 35%, rgba(0,255,0,1) 100%);
+}
+
+section.table-side {
+    background: linear-gradient(0deg, rgba(0,51,0,1) 0%, rgba(0,187,0,1) 35%, rgba(70,255,70,1) 100%);
+}
+
 .hand .card-container {
     width: 25%;
+    min-height: 460px;
+}
+
+.hand .card-container:first-child, .battlefield .card-container:first-child {
+    transform: rotate(-4deg);
+    top: 10px;
+    position: relative;
+}
+
+.hand .card-container:last-child, .battlefield .card-container:last-child {
+    transform: rotate(4deg);
+    top: 10px;
+    position: relative;
+}
+
+.hand .card, .battlefield .card {
+    box-shadow: rgb(0 0 0 / 75%) 10px 15px 5px 0px;
 }
 
 .deck .deck-card {
     border-bottom: 1px solid!important;
+    width: 160px;    
 }
 
 .top-card {
     background-image: url(/assets/img/castle.png);
-    height: 250px;
     background-size: 100% 100%;
+    height: 280px;
+    width: 180px;    
 }
