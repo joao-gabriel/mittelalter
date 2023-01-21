@@ -1,6 +1,7 @@
 .card {
     background-image: url(/assets/img/castle.png);
     background-size: 100% 100%;
+    position: relative;
 }
 
 img {
@@ -9,20 +10,32 @@ img {
 }
 
 .name {
-    position: relative;
-    top: 13px;
+    position: absolute;
+    top: 2%;
     left: 12.5%;
+    z-index: 10;
+}
+
+.image {
+    position: absolute;
+    width: 90%;
+    height: auto;
+    top: 5.7%;
 }
 
 .points {
-    position: relative;
-    bottom: 19px;
-    left: 37%;
+    position: absolute;
+    top: 52%;
+    left: 38%;
+    padding: 3% 8% 3% 8%;
+    z-index: 10;
 }
 
 .text {
-    position: relative;
-    top: -8px;
+    position: absolute;
+    top: 63%;
+    height: 33%;
+    width: 90%;
 }
 
 .text p{

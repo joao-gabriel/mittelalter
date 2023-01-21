@@ -1,15 +1,23 @@
-<section class="table-top h-75">
+<section class="table-top h-100">
   <div class="container pt-5">
+    <div class="row">
+      <div class="col-3 offset-2 text-center">
+        <h5 class="text-">
+          Your Damage: <br /> {{playerDamage}}
+        </h5>
+      </div>
+      <div class="col-3 offset-2 text-center">
+        <h5 class="text-">
+          Enemy Damage: <br />{{enemyDamage}}
+        </h5>
+      </div>
+    </div>
       <div class="row">
           <div class="col-2">
               <h2 class="">Deck</h2>
               <div class="deck">
-                  <div class="top-card">
-                      
-                  </div>
-                  <div class="deck-card border" *ngFor ="let data of players[0].deck;  let i = index">
-                      
-                  </div>
+                  <div class="top-card"></div>
+                  <div class="deck-card border" *ngFor ="let data of players[0].deck;  let i = index"></div>
               </div>
           </div>
           <div class="col-8">
@@ -29,7 +37,11 @@
               </div>
           </div>
           <div class="col-2">
+            <div class="discarded">
               <h2 class="">Discard</h2>
+              <app-card *ngIf="players[0].discarded.length>0" [data]="players[0].discarded[players[0].discarded.length-1]"></app-card>
+              <div class="deck-card border" *ngFor ="let data of players[0].discarded;  let i = index"></div>
+            </div>
           </div>
       </div>
   </div>
@@ -37,27 +49,38 @@
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#battleModal" id="battleModalBtn" style="visibility: hidden">
       Launch demo modal
   </button>
-</section>  
-<section class="table-side h-25">
-
 </section>
+
   <!-- Modal -->
   <div class="modal fade" id="battleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Battle</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Player's points {{playerPoints}}
+          <div class="row">
+            <div class="col-4 offset-1">
+              Player's Battlefield points: {{playerPoints}}
+            </div>
+            <div class="col-2"></div>
+            <div class="col-4">
+              Enemy's Battlefield points: {{enemyPoints}}
+            </div>
+          </div>
           <div class="battlefield">
             <div class="row">
-                <div class="card-container col-6" *ngFor ="let data of players[0].battlefield;  let i = index">
+                <div class="col-1"></div>
+                <div class="card-container col-2" *ngFor ="let data of players[0].battlefield;  let i = index">
                     <app-card [data]="data"></app-card><br />
                 </div>
-            </div>            
-        </div>          
+                <div class="col-2 pt-5"><h1 class="pt-5 text-center">VS</h1></div>
+                <div class="card-container col-2" *ngFor ="let data of players[1].battlefield;  let i = index">
+                  <app-card [data]="data"></app-card><br />
+              </div>                
+            </div>
+          </div>       
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

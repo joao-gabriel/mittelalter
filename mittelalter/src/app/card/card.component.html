@@ -1,21 +1,16 @@
-<div class="card p-2 h-75">
+<div class="card p-2 h-100 w-auto">
     <div class="card-body p-0">
-        <div class="name w-75">
-            <div class="card">
-                <div class="card-body p-0 text-center text-uppercase fw-bold bg-white">
-                    {{name}}
-                </div>
-            </div>
+        <div class="name w-75 bg-white text-uppercase text-center fw-bold rounded border">
+            {{name}}
         </div>
-
         <div class="image">
             <img [src]="'assets/img/'+imageSrc" />
         </div>
-        <div class="points rounded-circle border w-25 py-2 px-3 bg-secondary border-0 text-center fw-bold text-white bg-success">
+        <div class="points rounded-circle border bg-secondary border-0 text-center fw-bold text-white bg-success">
             {{points}}
         </div>        
-        <div class="text bg-secondary border rounded py-2 px-3 bg-white h-25 fw-bold">
+        <div class="text bg-secondary border rounded py-2 px-3 bg-white fw-bold">
             <p class="m-0"><small>{{text}}</small></p>
-        </div>
+        </div>                
     </div>
 </div>

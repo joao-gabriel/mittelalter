@@ -21,6 +21,8 @@ export class GameComponent {
   running:boolean = false;
   playerPoints = 0;
   enemyPoints = 0;
+  playerDamage = 0;
+  enemyDamage = 0;
 
   constructor(@Inject(DOCUMENT) private document: Document){
     let player1 = new PlayerComponent(this);
@@ -33,6 +35,12 @@ export class GameComponent {
   }
 
   newTurn(){
+    this.players[0].hand = [];
+    this.players[1].hand = [];
+    this.players[0].battlefield = [];
+    this.players[1].battlefield = [];
+    this.sendToDeckBtnClicked = false;
+    this.sendToEnemyBtnClicked = false;
     this.players[0].fillHand(4);
     this.players[1].fillHand(4);
     console.log(this.players[0]);
@@ -108,7 +116,6 @@ export class GameComponent {
   }
 
   checkBattlefields(battlefield1:any, battlefield2:any){
-    console.log(battlefield1);
     battlefield1.forEach((element: any) => {
       if (element.hasEffect){
         element.cardEffect(this, element);
@@ -123,18 +130,36 @@ export class GameComponent {
       this.enemyPoints += element.points;
     });
     
-    console.log(battlefield1);
-    console.log(battlefield2);
     console.log ('forca de ataque: '+this.playerPoints);
     console.log ('forca de ataque inimiga: '+this.enemyPoints);
+    if (this.playerPoints > this.enemyPoints){
+      this.enemyDamage += this.playerPoints - this.enemyPoints;
+    }
+    if (this.playerPoints < this.enemyPoints){
+      this.playerDamage += this.enemyPoints - this.playerPoints;
+    }    
     let modalBtn = this.document.getElementById('battleModalBtn');
     modalBtn?.click();
-    console.log(this.document.getElementById('battleModalBtn'));
-  
+    console.log(this.document.getElementById('battleModal'));
+    let myModalEl = document.getElementById('battleModal');
+    if (myModalEl){
+      myModalEl.addEventListener('hidden.bs.modal',  (event) => {
+        this.playerPoints = 0;
+        this.enemyPoints = 0;
+        this.moveCard(0, 'battlefield', this.players[0], 'discarded', this.players[0]);
+        this.moveCard(0, 'battlefield', this.players[0], 'discarded', this.players[0]);
+        this.moveCard(0, 'battlefield', this.players[1], 'discarded', this.players[1]);
+        this.moveCard(0, 'battlefield', this.players[1], 'discarded', this.players[1]);    
+        this.newTurn();
+      });
+    }
+    
   }
 
   otherPlayer(player:PlayerComponent){
-    return this.players.find(element => element.id != player.id);
+    let otherPlayer = this.players[0].id==player.id? this.players[1]:this.players[0];
+    console.log(otherPlayer);
+    return otherPlayer;
   }
 
   sendCardToDeck(index:number){
