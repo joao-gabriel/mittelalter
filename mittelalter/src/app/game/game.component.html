@@ -56,29 +56,34 @@
     <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Battle</h5>
+          <h5 class="modal-title text-center text-uppercase" id="exampleModalLabel">Battle</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-4 offset-1">
-              Player's Battlefield points: {{playerPoints}}
+            <div class="col-4 offset-1 text-uppercase text-center fw-bold">
+              Player's Battlefield
             </div>
             <div class="col-2"></div>
-            <div class="col-4">
-              Enemy's Battlefield points: {{enemyPoints}}
+            <div class="col-4 text-uppercase text-center fw-bold">
+              Enemy's Battlefield
             </div>
           </div>
-          <div class="battlefield">
+          <div class="battlefield position-relative pt-5"> 
             <div class="row">
-                <div class="col-1"></div>
-                <div class="card-container col-2" *ngFor ="let data of players[0].battlefield;  let i = index">
-                    <app-card [data]="data"></app-card><br />
-                </div>
-                <div class="col-2 pt-5"><h1 class="pt-5 text-center">VS</h1></div>
-                <div class="card-container col-2" *ngFor ="let data of players[1].battlefield;  let i = index">
-                  <app-card [data]="data"></app-card><br />
-              </div>                
+              <div class="col-1">
+                <div class="points bg-success rounded-circle border text-center border-0 py-4 fw-bold mt-3">{{playerPoints}}</div>
+              </div>
+              <div class="card-container col-2" *ngFor ="let data of players[0].battlefield;  let i = index">
+                <app-card [data]="data"></app-card><br />
+              </div>
+              <div class="col-2 pt-5"><h1 class="pt-5 text-center">VS</h1></div>
+              <div class="card-container col-2" *ngFor ="let data of players[1].battlefield;  let i = index">
+                <app-card [data]="data"></app-card><br />
+              </div>
+              <div class="col-1">
+                <div class="enemyPoints bg-success rounded-circle border text-center border-0 py-4 fw-bold mt-3">{{enemyPoints}}</div>
+              </div>              
             </div>
           </div>       
         </div>

@@ -25,6 +25,7 @@ export class CardComponent implements OnInit {
   onwer!:PlayerComponent;
   value!:number;
   cardEffect = (game:GameComponent, card:CardComponent) => {}; 
+  effectInterruptBattle = false;
 
   constructor(){
     

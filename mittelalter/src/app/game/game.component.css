@@ -41,3 +41,32 @@ section.table-top {
     left: 36px;
     position: relative;    
 }
+
+::ng-deep .discarded .name {
+    font-size: 80%;
+}
+
+.battlefield .points {
+    position: absolute;
+    z-index: 11;
+    width: 80px;
+    color: white;
+    top: 0;
+    left: 21.5%;
+}
+
+.battlefield .enemyPoints {
+    position: absolute;
+    z-index: 11;
+    width: 80px;
+    color: white;
+    top: 0;
+    right: 21.5%;
+}
+
+
+#battleModal .modal-content {
+    background: rgb(254,225,0);
+    background: linear-gradient(0deg, rgba(254,225,0,1) 0%, rgba(187,18,0,1) 50%, rgba(254,225,0,1) 100%);
+}
+

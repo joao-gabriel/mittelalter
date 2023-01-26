@@ -45,7 +45,6 @@ export class GameComponent {
     this.players[1].fillHand(4);
     console.log(this.players[0]);
     console.log(this.players[1]);
-    this.AISelection();
   }
 
   // FIXME: Review if the code is actually removing the right card from source
@@ -115,29 +114,17 @@ export class GameComponent {
   
   }
 
-  checkBattlefields(battlefield1:any, battlefield2:any){
-    battlefield1.forEach((element: any) => {
-      if (element.hasEffect){
-        element.cardEffect(this, element);
-      }
-      this.playerPoints += element.points;
-    });
-
-    battlefield2.forEach((element: any) => {
-      if (element.hasEffect){
-        element.cardEffect(this, element);
-      }
-      this.enemyPoints += element.points;
-    });
-    
-    console.log ('forca de ataque: '+this.playerPoints);
-    console.log ('forca de ataque inimiga: '+this.enemyPoints);
-    if (this.playerPoints > this.enemyPoints){
-      this.enemyDamage += this.playerPoints - this.enemyPoints;
+  orderCardsByPrecedence( a:CardComponent, b:CardComponent ) {
+    if ( a.precendence < b.precendence ){
+      return -1;
     }
-    if (this.playerPoints < this.enemyPoints){
-      this.playerDamage += this.enemyPoints - this.playerPoints;
-    }    
+    if ( a.precendence > b.precendence ){
+      return 1;
+    }
+    return 0;
+  }
+
+  endBattle(battlefield1:any, battlefield2:any){
     let modalBtn = this.document.getElementById('battleModalBtn');
     modalBtn?.click();
     console.log(this.document.getElementById('battleModal'));
@@ -153,6 +140,75 @@ export class GameComponent {
         this.newTurn();
       });
     }
+  }
+
+  checkBattlefields(battlefield1:any, battlefield2:any){
+
+    battlefield1.sort( this.orderCardsByPrecedence );
+
+    // Check player cards for effects before counting points
+    battlefield1.forEach((element: any) => {
+      if (element.hasEffect && element.effectPhase == 1){
+        element.cardEffect(this, element);
+      }
+    });
+
+    // Check enemy cards for effects before counting points
+    battlefield2.forEach((element: any) => {
+      if (element.hasEffect && element.effectPhase == 1){
+        element.cardEffect(this, element);
+      }
+    });
+
+    // Count points for player and check for modifiers effects 
+    battlefield1.forEach((element: any) => {
+      if (element.hasEffect && element.effectPhase == 2){
+        element.cardEffect(this, element);
+      }
+      this.playerPoints += element.points;
+    });  
+
+    if (this.playerPoints < 0){
+      this.playerPoints = 0;
+    }
+
+    // Count points for enemy and check for modifiers effects 
+    battlefield2.forEach((element: any) => {
+      if (element.hasEffect && element.effectPhase == 2){
+        element.cardEffect(this, element);
+      }
+      this.enemyPoints += element.points;
+    });  
+
+    if (this.enemyPoints < 0){
+      this.enemyPoints = 0;
+    }
+
+    console.log ('forca de ataque: '+this.playerPoints);
+    console.log ('forca de ataque inimiga: '+this.enemyPoints);
+
+    // Check if player won
+    if (this.playerPoints > this.enemyPoints){
+      // Check player cards for effects after victory
+      battlefield1.forEach((element: any) => {
+        if (element.hasEffect && element.effectPhase == 3){
+          element.cardEffect(this, element);
+        }
+      });
+      this.enemyDamage += this.playerPoints - this.enemyPoints;
+    }
+
+    // Check if enemy won
+    if (this.playerPoints < this.enemyPoints){
+      // Check enemy cards for effects after victory
+      battlefield2.forEach((element: any) => {
+        if (element.hasEffect && element.effectPhase == 3){
+          element.cardEffect(this, element);
+        }
+      });
+      this.playerDamage += this.enemyPoints - this.playerPoints;
+    }    
+    this.endBattle(battlefield1, battlefield2);
     
   }
 
@@ -169,6 +225,7 @@ export class GameComponent {
   }
 
   sendCardToEnemy(index:number){
+    // TODO: Check if card belongs to enemy (cant send that card)
     this.moveCard(index, 'hand', this.players[0], 'deck', this.players[1]);
     this.sendToEnemyBtnClicked = true;
     this.checkActions();
@@ -179,6 +236,7 @@ export class GameComponent {
     if (this.sendToEnemyBtnClicked && this.sendToDeckBtnClicked){
       this.moveCard(0, 'hand', this.players[0], 'battlefield', this.players[0]);
       this.moveCard(0, 'hand', this.players[0], 'battlefield', this.players[0]);
+      this.AISelection();
       this.checkBattlefields(this.players[0].battlefield, this.players[1].battlefield);
     }
   }

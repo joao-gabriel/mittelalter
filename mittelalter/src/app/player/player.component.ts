@@ -68,7 +68,7 @@ export class PlayerComponent {
         imageSrc: 'archers.PNG',
         value: 1,
         text : "If there's no Archers or Catapults on enemy battlefield, add 1 point",
-        effectPhase:3,
+        effectPhase:2,
         precendence: 129,
         hasEffect:true,
         cardEffect:(game:GameComponent, card:CardComponent) => {
@@ -94,12 +94,38 @@ export class PlayerComponent {
         value:2
       },
       {
-        quantity:4,
+        quantity:2,
         name: 'Catapult',
         points: 3,
         imageSrc: 'catapult.png',
         value: 4,
         text : "If there's no Catapults on enemy battlefield, add 1 point",
+        effectPhase:2,
+        precendence: 129,
+        hasEffect:true,
+        cardEffect:(game:GameComponent, card:CardComponent) => {
+          let thisCard = card;
+          let otherPlayer = game.otherPlayer(thisCard.onwer);
+          console.log(otherPlayer?.battlefield);
+          thisCard.points = 4;
+          if (typeof otherPlayer == 'object'){
+            otherPlayer.battlefield.forEach((element: CardComponent) => {
+              console.log(element.name);
+              if (element.name == 'Catapult'){
+                thisCard.points = 3;
+              }
+              console.log(thisCard.points);
+            });
+          }
+        }
+      }, 
+      {
+        quantity:2,
+        name: 'Constructors',
+        points: 1,
+        imageSrc: 'constructors.png',
+        value:2,
+        text : "If you win this battle, remove 1 damage point",
         effectPhase:3,
         precendence: 129,
         hasEffect:true,
@@ -118,7 +144,15 @@ export class PlayerComponent {
             });
           }
         }
-      },    
+      },
+      {
+        quantity:4,
+        name: 'Saboteur',
+        points: -1,
+        imageSrc: 'saboteur.png',
+        value:1
+      },
+         
     ];
 
     availableCards.forEach((element, index) => {
